@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<ctype.h>
-
+#include <ctype.h>
 #include "Cipher.h"
 
 
-
+void* createStrElement(void* str);
+void destroyStrElement(void* elem);
 /* Construieste un multi-dictionar pe baza unui fisier text
  * Cheia (elem) unui nod va fi reprezentata de un cuvant din text
  * iar valoarea (info) va fi indexul de inceput al acelui cuvant
@@ -26,6 +26,25 @@ void buildTreeFromFile(char* fileName, TTree* tree) {
 	// Verificarea argumentelor
 	if(fileName == NULL || tree == NULL)
 		return;
+	FILE *file = fopen(fileName, "r");
+	int ind_len = 0;
+	char *line = (char *) malloc(BUFLEN * sizeof(char));
+	while (fgets(line, BUFLEN, file))
+	{
+		char *p = strtok(line, ",.? \n");
+		while (p)
+		{
+			char *elem = createStrElement(p);
+			insert(tree, elem, &ind_len);
+			ind_len += (int)strlen(p);
+			destroyStrElement(elem);
+			p = strtok(NULL, ",.? \r\n");
+		} 
+	}
+	
+	fclose(file);
+	free(line);
+
 }
 
 
@@ -70,7 +89,25 @@ void printKey(char *fileName, Range *key) {
  * de duplicate)
  */
 Range* inorderKeyQuery(TTree* tree) {
-	return NULL;
+	if (tree == NULL || tree->root == NULL)
+        return NULL;
+	Range *key = (Range*) malloc(sizeof(Range));
+	if(key == NULL) {
+		return NULL;
+	}
+	int i = 0;
+	key->size = 0;
+	key->capacity = tree->size;
+	key->index = malloc(sizeof(int) * tree->size);
+	//parcurg de la minimum, ptu a salva indecsii in ordine crescatoare
+	TreeNode *p = minimum(tree->root);
+    while (p!=NULL)
+	{	
+		key->index[i++] = *(int *)p->info;
+        key->size++;
+        p = p->next;
+	}
+	return key;
 }
 
 

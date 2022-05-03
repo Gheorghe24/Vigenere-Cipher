@@ -631,7 +631,7 @@ void draw_tree(TTree *tree, int type) {
 	print_dot(tree->root, f, type);
 	fclose(f);
 
-	system("dot tree.dot | neato -n -Tpng -o tree.png");
+	//system("dot tree.dot | neato -n -Tpng -o tree.png");
 }
 
 
@@ -658,8 +658,8 @@ void test_build_tree(TTree **tree) {
 		fclose(f);
 	} else {
 		print_dot((*tree)->root, f, 2);
+		system("dot outputs/simple_key_tree.dot | neato -n -Tpng -o outputs/simple_key_tree.png");
 		fclose(f);
-		// system("dot outputs/simple_key_tree.dot | neato -n -Tpng -o outputs/simple_key_tree.png");
 	}
 
 	destroyTree(*tree);
@@ -682,8 +682,8 @@ void test_build_tree(TTree **tree) {
 
 	} else {
 		print_dot((*tree)->root, f, 2);
+		system("dot outputs/key_tree.dot | neato -n -Tpng -o outputs/key_tree.png");
 		fclose(f);
-		// system("dot outputs/key_tree.dot | neato -n -Tpng -o outputs/key_tree.png");
 	}
 }
 
@@ -757,6 +757,7 @@ int main() {
 		compareStr);
 
 	test_build_tree(&dict);
+	draw_tree(dict, 2);
 	test_inorder_key(&dict);
 	test_level_key(&dict);
 	test_range_key(&dict);
