@@ -504,7 +504,8 @@ void delete (TTree *tree, void *elem)
 	}
 
 	if (defnode->right == NULL && defnode->left != NULL)
-	{ // are doar un copil
+	{ 
+		// are doar un copil
 		link_node_parent(tree, defnode, defnode->left);
 	}
 	else if (defnode->left == NULL && defnode->right != NULL)
