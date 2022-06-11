@@ -17,6 +17,10 @@ TTree *createTree(void *(*createElement)(void *),
 				  int compare(void *, void *))
 {
 	TTree *newTree = (TTree *)malloc(sizeof(TTree));
+	if (newTree == NULL)
+	{
+		return NULL;
+	}
 	newTree->createElement = createElement;
 	newTree->createInfo = createInfo;
 	newTree->destroyElement = destroyElement;
@@ -46,18 +50,17 @@ int isEmpty(TTree *tree)
  */
 TreeNode *search(TTree *tree, TreeNode *x, void *elem)
 {
-	if (x == NULL)
+	if (x == NULL || tree == NULL)
 		return NULL;
 	if (tree->compare(elem, x->elem) == 0)
 	{
-		// printf("%d %d\n", *(int*)x->elem, *(int*)elem);
 		return x;
 	}
 	else if (tree->compare(elem, x->elem) == -1)
 	{
 		return search(tree, x->left, elem);
 	}
-		return search(tree, x->right, elem);
+	return search(tree, x->right, elem);
 }
 
 /* Gaseste nodul cu elementul minim dintr-un arbore
@@ -129,7 +132,6 @@ void updateHeight(TreeNode *x)
 	}
 }
 
-
 /* Functie ce primeste adresa unui arbore si
  * a unui nod x si realizeaza o rotatie la stanga
  * a subarborelui care are varful in x
@@ -189,11 +191,14 @@ void avlRotateRight(TTree *tree, TreeNode *y)
 
 	TreeNode *x = y->left;
 
+	
 	if (x->right)
 	{
 		x->right->parent = y;
 	}
+	//leg copilul lui x
 	y->left = x->right;
+	// verific ce fel de copil este x 
 	if (y->parent == NULL)
 	{
 		tree->root = x;
@@ -206,6 +211,7 @@ void avlRotateRight(TTree *tree, TreeNode *y)
 	{
 		y->parent->right = x;
 	}
+	//leg x de y
 	x->parent = y->parent;
 	x->right = y;
 	y->parent = x;
@@ -244,80 +250,63 @@ int avlGetBalance(TreeNode *x)
 void avlFixUp(TTree *tree, TreeNode *y)
 {
 	void *elem = y->elem;
-	TreeNode *par = y;
+	TreeNode *par = y->parent;
+	// verific balansarea incepand de la parintele nodului
 	while (par != NULL)
 	{
 		updateHeight(par);
 		int balance = avlGetBalance(par);
-
+		// verific daca parintele este debalansat in partea dreapta sau in partea stanga
+		// sau daca e in forma zig-zag
 		if (balance > 1 && tree->compare(elem, par->left->elem) == -1)
 		{
-			// printf("CAZ 1\n");
 			avlRotateRight(tree, par);
-			 break;
 		}
-		if (balance < -1 && tree->compare(elem, par->right->elem) == 1)
+		else if (balance < -1 && tree->compare(elem, par->right->elem) == 1)
 		{
-			// printf("CAZ 2\n");
 			avlRotateLeft(tree, par);
-			 break;
 		}
-		if (balance > 1 && tree->compare(elem, par->left->elem) == 1)
+		else if (balance > 1 && tree->compare(elem, par->left->elem) == 1)
 		{
-			// printf("CAZ 3\n");
 			avlRotateLeft(tree, par->left);
 			avlRotateRight(tree, par);
-			 break;
 		}
-		if (balance < -1 && tree->compare(elem, par->right->elem) == -1)
+		else if (balance < -1 && tree->compare(elem, par->right->elem) == -1)
 		{
-			// printf("CAZ 4\n");
 			avlRotateRight(tree, par->right);
 			avlRotateLeft(tree, par);
-			 break;
 		}
-		// printf("\n");
 		par = par->parent;
 	}
 }
 
 void avlDeleteFixUp(TTree *tree, TreeNode *y)
 {
-	// void *elem = y->elem;
 	TreeNode *par = y;
+	//aici verific chiar de la acel nod si ii actualizez inaltimea pana la ajung la root
+	// ma folosesc totusi si de inaltimile copilul de dreapta sau de stanga
 	while (par != NULL)
 	{
 		updateHeight(par);
 		int balance = avlGetBalance(par);
-		// printf("BAL %d Hei %d PAR %d ROOT %d \n", balance, par->height,*(long int*)par->elem, *(long int*)(tree)->root->elem);
-
 		if (balance > 1 && avlGetBalance(par->left) >= 0)
 		{
-			// printf("CAZ 1\n");
 			avlRotateRight(tree, par);
-			break;
 		}
-		if (balance < -1 && avlGetBalance(par->right) <= 0)
+		else if (balance < -1 && avlGetBalance(par->right) <= 0)
 		{
-			// printf("CAZ 2\n");
 			avlRotateLeft(tree, par);
-			// break;
 		}
-		if (balance > 1 && avlGetBalance(par->left) < 0)
+		else if (balance > 1 && avlGetBalance(par->left) < 0)
 		{
-			// printf("CAZ 3\n");
 			avlRotateLeft(tree, par->left);
 			avlRotateRight(tree, par);
-			// break;
 		}
-		if (balance < -1 && avlGetBalance(par->right) > 0)
+		else if (balance < -1 && avlGetBalance(par->right) > 0)
 		{
-			// printf("CAZ 4\n");
 			avlRotateRight(tree, par->right);
 			avlRotateLeft(tree, par);
-			// break;
 		}
-		// printf("\n");
 		par = par->parent;
 	}
 }
@@ -406,34 +395,26 @@ void insert(TTree *tree, void *elem, void *info)
 			curr->end->next = newnode;
 			curr->end = newnode;
 		}
-
-		if (maximum(tree->root) != newnode && tree->compare(elem, curr->elem) != 0)
+		//Verific daca pot sa leg cu nodul predecesor si succesor
+		if (successor(newnode) != NULL && tree->compare(elem, curr->elem) != 0)
 		{
 			successor(newnode)->prev = newnode;
 			newnode->next = successor(newnode);
 		}
-		if (minimum(tree->root) != newnode && tree->compare(elem, curr->elem) != 0)
+		if (predecessor(newnode) != NULL && tree->compare(elem, curr->elem) != 0)
 		{
 			predecessor(newnode)->end->next = newnode;
 			newnode->prev = predecessor(newnode)->end;
 		}
 	}
-
 	tree->size++;
 	updateHeight(newnode);
-	avlFixUp(tree, newnode);
+	if (newnode)
+		avlFixUp(tree, newnode);
 }
 
-void printL(TTree *tree)
-{
-	TreeNode *y = maximum(tree->root);
-	while (y != NULL)
-	{
-		printf("%d   ", *(int *)y->elem);
-		y = y->prev;
-	}
-	printf("\n");
-}
+
+
 /* Eliminarea unui nod dintr-un arbore
  *
  * ! tree trebuie folosit pentru eliberarea
@@ -454,9 +435,11 @@ void destroyTreeNode(TTree *tree, TreeNode *node)
 	// Eliberarea memoriei nodului
 	free(node);
 }
-
+// functie care leaga nodul al doilea dat ca parametru de parintele primului si viceversa
+// legatura dubla (parinte copil si copil parinte)
 void link_node_parent(TTree *tree, TreeNode *first, TreeNode *second)
 {
+	// verific daca primul nod e root
 	if (first->parent == NULL)
 	{
 		tree->root = second;
@@ -469,6 +452,7 @@ void link_node_parent(TTree *tree, TreeNode *first, TreeNode *second)
 	{
 		first->parent->right = second;
 	}
+	//verific daca al doilea nod exista 
 	if (second)
 	{
 		second->parent = first->parent;
@@ -484,10 +468,8 @@ void delete (TTree *tree, void *elem)
 {
 	if (tree == NULL || tree->root == NULL)
 		return;
-	// printf("%d        o\n", *(int*)tree->root->right->elem);
 	if (tree->root->left == NULL && tree->root->right == NULL)
 	{
-		// printf("dhgdhsjdhdhjkdjh\n");
 		destroyTreeNode(tree, tree->root);
 		tree->root = NULL;
 		tree->size--;
@@ -497,9 +479,6 @@ void delete (TTree *tree, void *elem)
 	if (defnode == NULL)
 		return;
 	TreeNode *par = defnode->parent;
-		// if(defnode!=maximum(tree->root))
-		// if(defnode->prev)
-	 	//  printf("%d elem %d end  \n", *(int*)elem, *(int*)defnode->prev->info);
 	if (defnode->end != defnode)
 	{
 		TreeNode *aux = defnode->end;
@@ -511,17 +490,18 @@ void delete (TTree *tree, void *elem)
 		tree->size--;
 		return;
 	}
-
-	if(predecessor(defnode)) {
+	if (predecessor(defnode))
+	{
 		predecessor(defnode)->end->next = defnode->next;
-		if(defnode->next)
-		defnode->next->prev = predecessor(defnode)->end;
-	} 
-	if(successor(defnode)) {
+		if (defnode->next)
+			defnode->next->prev = predecessor(defnode)->end;
+	}
+	if (successor(defnode))
+	{
 		successor(defnode)->prev = defnode->prev;
-		if(defnode->prev)
-		defnode->prev->end->next = successor(defnode);
-	} 
+		if (defnode->prev)
+			defnode->prev->end->next = successor(defnode);
+	}
 
 	if (defnode->right == NULL && defnode->left != NULL)
 	{ // are doar un copil
@@ -555,15 +535,11 @@ void delete (TTree *tree, void *elem)
 		else if (par->right == defnode)
 			par->right = NULL;
 	}
-	// printf("%d %d\n", *(int*)defnode->elem, *(int*)par->elem);
-	
 
 	destroyTreeNode(tree, defnode->end);
 	tree->size--;
 	if (par)
 		avlDeleteFixUp(tree, par);
-	// printf("%d   ", *(int*)tree->root->elem);
-	// printf("%d        p\n", *(int*)tree->root->right->elem);
 }
 
 /* Eliberarea memoriei unui arbore
@@ -579,12 +555,12 @@ void destroyTree(TTree *tree)
 		return;
 
 	TreeNode *aux = maximum(tree->root);
-	while(aux != NULL) {	
+	while (aux != NULL)
+	{
 		TreeNode *prev = aux;
 		aux = aux->prev;
 		destroyTreeNode(tree, prev);
 	}
-	if(tree) 
-	free(tree);
-	//TODO: Cerinta 1g
+	if (tree)
+		free(tree);
 }

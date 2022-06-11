@@ -716,7 +716,6 @@ void test_level_key(TTree **tree) {
 	}
 }
 
-
 void test_range_key(TTree **tree) {
 
 	Range *key = rangeKeyQuery((*tree), "CD", "GG");

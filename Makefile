@@ -18,5 +18,5 @@ run: $(EXEC)
 	./$(EXEC)
 
 clean:
-	rm -f $(EXEC) $(OFILES) $(OUTPUT_DIR)/*.out $(OUTPUT_DIR)/*.dot
+	rm -f $(EXEC) $(OFILES) # $(OUTPUT_DIR)/*.out $(OUTPUT_DIR)/*.dot
 

@@ -29,6 +29,9 @@ void buildTreeFromFile(char* fileName, TTree* tree) {
 	FILE *file = fopen(fileName, "r");
 	int ind_len = 0;
 	char *line = (char *) malloc(BUFLEN * sizeof(char));
+	if(line == NULL) {
+		return;
+	}
 	while (fgets(line, BUFLEN, file))
 	{
 		char *p = strtok(line, ",.? \n");
@@ -100,12 +103,12 @@ Range* inorderKeyQuery(TTree* tree) {
 	key->capacity = tree->size;
 	key->index = malloc(sizeof(int) * tree->size);
 	//parcurg de la minimum, ptu a salva indecsii in ordine crescatoare
-	TreeNode *p = minimum(tree->root);
-    while (p!=NULL)
+	TreeNode *node = minimum(tree->root);
+    while (node!=NULL)
 	{	
-		key->index[i++] = *(int *)p->info;
+		key->index[i++] = *(int *) node->info;
         key->size++;
-        p = p->next;
+        node = node->next;
 	}
 	return key;
 }
@@ -118,15 +121,45 @@ Range* inorderKeyQuery(TTree* tree) {
  * parcurgerii in inordine a arborelui)
  */
 Range* levelKeyQuery(TTree* tree) {
-	return NULL;
+    return NULL;
 }
+
+
 
 
 /* Extragerea cheii din nodurile aflate intr-un anumit
  * domeniu de valori specificat
  */
 Range* rangeKeyQuery(TTree* tree, char* q, char* p) {
-	return NULL;
+	if(tree == NULL || tree->root == NULL)
+		return NULL;
+	Range *key = malloc(sizeof(Range));
+	if(key == NULL) {
+		return NULL;
+	}
+	key->capacity = 30;
+	//nu conteaza ce capacitate pun la inceput,oricum se dubleaza in cazul in care e prea putin
+	//incepem cu size de la 0
+	key->size = 0;
+	key->index = malloc(sizeof(int) * key->capacity);
+	TreeNode *node = minimum(tree->root);
+	//parcurg iarasi lista de la inceput
+	//insa de data asta caut noduri a carui element sa fie intre p si q
+    while (node!=NULL)
+	{	
+		if(tree->compare(node->elem, q) == 1 && tree->compare(p, node->elem) == 1) {
+			//maresc capacitatea de 2 ori in cazul in care e prea mic size-ul
+			if(key->size == key->capacity){
+				key->index = realloc(key->index, key->capacity * sizeof(int) * 2);
+				key->capacity = key->capacity*2;
+			}
+			//adaug de fiecare data cand respect cerinta si maresc sizeul
+			key->index[key->size] = *(int*)node->info;
+			key->size++;
+		}
+		node = node->next;
+	}
+	return key;
 }
 
 
