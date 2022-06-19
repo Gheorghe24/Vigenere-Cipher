@@ -1,26 +1,32 @@
 # Vigenere Cipher
 
-CERINTA 1
----------------------------------------------------------------------------------
+Task 1
+=============
 CreateTree:
+----------
 
 I create a new tree and allocate memory to it, I put the function or value given to each element in the structure as a parameter, I initialize the size with 0 and root with null.
 
 IsEmpty:
+-----------
 
 Check if my tree doesn't have root (this is the first one)
 
 Search:
+--------
 
 I construct the recursive function and traverse the tree according to the comparison between the element and the node with which I traverse (left or right), until I find the node with the searched element.
 
 Minimum:
+----------
 This is the leftmost element of the left subtree (bottom)
 
 Maximum:
+----------
 This is the largest element in the right subtree (scroll to NULL on the right)
 
 Successor & Predecessor:
+------------------------
 
 These functions are very similar. There are 2 situations in each of these:
 
@@ -29,35 +35,43 @@ For the predecessor: if there is a subtree right from the node, then it is the m
 Successor : if there is a left subtree of the node, I return the maximum value, otherwise I go with the parent until I find a value higher than the node
 
 updateHeight:
+------------
 
 I calculate the height for the left and right tree and then I update the height according to which is the largest plus the root node
 
 Avlrotateleft:
+--------------
 
 Schimb linkurile dintre nodurile x si y si copilul din stanga al lui y.
 Linkuesc si legaturile dintre parintii acestora. Iau si cazul in care nu exista copii, sau nu x nu are parinte.Ma intreb daca x e copil de stanga sau copil de dreapta, ca sa ii leg parintele de y.
 La final actualizez inaltimea pentru x si y.
 
-avlrotateRight:
+AvlrotateRight:
+----------------
 Este exact acelasi algoritm insa aici x e copil de stanga pentru y si schimbam legatura cu copilul din dreapta a lui x.
 
-avlGetBalance:
+AvlGetBalance:
+---------------
 Verific daca exista acel nod si daca are copil de dreapta sau de stanga apoi returnez formula:
 (height(left) - height(right))
 
-avlFixup:
+AvlFixup:
+----------
 verific balansarea incepand de la parintele nodului
 verific daca parintele este debalansat in partea dreapta sau in partea stanga
 sau daca e in forma zig-zag si fac rotatiile necesare 
 
-avlDeleteFixup:
+AvlDeleteFixup:
+----------------
 o functie foarte asemanatoare cu cea de sus insa aici verific balansarea chiar de la acel nod
 si ma folosesc de balansarea nodului(subarborelui debalansat, copilul de dreapta sau de stanga)
 
-createTreeNode:
+CreateTreeNode:
+----------------
 functie deja creata
 
-insert:
+Insert:
+--------------
 Aici am inceput prin a crea nodul cu elementul si informatia specifica
 Parcurg arborele pana gasesc pozitia unde ar trebui sa il inserez si totodata verific daca acesta nu e duplicat
 In cazul in care lista e goala, doar inserez root si ii pun legatura de end tot lui
@@ -69,6 +83,7 @@ Avand in vedere ca inserez si intr-o lista dublu inlantuita in ordine crescatoar
 Maresc size-ul arborelui si verific daca e acesta e balansat corect.
 
 Delete:
+----------
 Aici folosesc si o functie ajutatoare "Link_node_parent"
 Aceasta face legaturile intre parintele primului nod dat ca parametru si cel de-al doilea nod.
 Verific, desigur, daca exista aceste noduri si daca nu e root primul din acestea.
@@ -86,6 +101,7 @@ Daca nu are copii, doar ii pun Null legaturii parintelui acestui nod cautat
 La final sterg elementul cu functia destroy, creata deja care elibereaza si memoria totodata, miscorez size-ul si balansez arborele, daca acesta are nevoie de asta
 
 DestroyTree:
+-------------
 Incep de la finalul listei si sterg fiecare element pana ajung la inceput, ma folosesc de un pointer auxiliar ca sa dau free nodului curent.
 Apoi eliberez memoria arborelui.
 
@@ -94,6 +110,7 @@ CERINTA 2: CIPHER
 Aduc in acest fisier antetul unor functii din Tema2.c
 
 BuildTreeFromFile:
+------------------
 Deschid fisierul cu numele dat ca parametru, aloc memorie pentru un char "linie" pe care il citesc din fisier. Ma folosesc de while(fgets) ca sa citesc pana la finalul fisierului, apoi cu strtok iau fiecare cuvant din linia citita. Imi creez un element cu functia createStrElement(aceasta trunhiaza automat cuvintele la primele 5 litere). De asemenea, imi declar o variabila in care salvez lungimea fiecarui cuvintelor citite pana la final, acesta e transmis ca informatie in insert
 Inserez nodul cu elementul si lungimea specifica, actualizez lungimea, distrug elementul si fac iarasi strtok ca sa iau urmatorul nod
 Inchid fisierul si eliberez memorie pentru "linia citita"(pointerul la char alocat).
@@ -101,12 +118,14 @@ Inchid fisierul si eliberez memorie pentru "linia citita"(pointerul la char aloc
 CERINTA 3:
 -----------------------------------------------------------------------------------
 inorderKeyQuery:
+------------------
 aloc memorie pentru un nou range
 Ii pun sizeul initial 0 si capacitatea size-ul arborelui(puteam pune si alte valori insa aceasta cred ca este cea mai eficienta, pentru a nu realoca in alte cazuri).
 Parcurg lista de la nodul minim si pun in index informatia din fiecare nod,cresc sizeul
 La final returnez rangeul creat.
 
 RangeKeyQuery:
+-----------------
 Aloc memorie pentru o noua cheie(range), parcurg iarasi de la nodul minim(inceputul listei),
 Caut nodurile doar din intervalul specificat(elementul nodului trebuie sa fie intre charurile p si q)
 In cazul in care capacitatea e prea mica si am nevoie sa o maresc, ii realoc memorie indexului si maresc capacitatea de 2 ori.
