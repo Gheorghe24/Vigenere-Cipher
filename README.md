@@ -39,32 +39,33 @@ updateHeight:
 
 I calculate the height for the left and right tree and then I update the height according to which is the largest plus the root node
 
-Avlrotateleft:
+AvlRotateLeft:
 --------------
 
-Schimb linkurile dintre nodurile x si y si copilul din stanga al lui y.
-Linkuesc si legaturile dintre parintii acestora. Iau si cazul in care nu exista copii, sau nu x nu are parinte.Ma intreb daca x e copil de stanga sau copil de dreapta, ca sa ii leg parintele de y.
-La final actualizez inaltimea pentru x si y.
+I change the links between the nodes x and y and the child to the left of y.
+I also link the connection between their parents. Then I take the case that there are no children, or x has no parent. 
+I wonder if x is a left child or a right child, to link his parent to y.
+At the end I update the height for x and y.
 
-AvlrotateRight:
+AvlRotateRight:
 ----------------
-Este exact acelasi algoritm insa aici x e copil de stanga pentru y si schimbam legatura cu copilul din dreapta a lui x.
+It's exactly the same algorithm but here x is the child on the left for y and we change the connection with the child on the right of x.
 
 AvlGetBalance:
 ---------------
-Verific daca exista acel nod si daca are copil de dreapta sau de stanga apoi returnez formula:
-(height(left) - height(right))
+I check if that node exists and if it has a right or left child then I return the formula:
+
+(height (left) - height (right))
 
 AvlFixup:
 ----------
-verific balansarea incepand de la parintele nodului
-verific daca parintele este debalansat in partea dreapta sau in partea stanga
-sau daca e in forma zig-zag si fac rotatiile necesare 
+I check the balance starting from the parent of the node
+Check if the parent is unbalanced on the right or left side
+or if it is in a zig-zag shape and makes the necessary rotations
 
 AvlDeleteFixup:
 ----------------
-o functie foarte asemanatoare cu cea de sus insa aici verific balansarea chiar de la acel nod
-si ma folosesc de balansarea nodului(subarborelui debalansat, copilul de dreapta sau de stanga)
+A function very similar to the one above but here I check the balance right from that node and I use the balance of the node (unbalanced subtree, right or left child)
 
 CreateTreeNode:
 ----------------
