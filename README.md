@@ -1,32 +1,39 @@
-TEMA 2
-Grosu Gheorghe 314CD
+# Vigenere Cipher
 
 CERINTA 1
 ---------------------------------------------------------------------------------
 CreateTree:
-creez un nou tree si ii aloc memorie,ii pun fiecarui element din structura functia sau valoarea data ca parametru, initializez sizeul cu 0 si root cu null.
 
-isEmpty:
-verific daca nu are elementul root(acesta e primul)
+I create a new tree and allocate memory to it, I put the function or value given to each element in the structure as a parameter, I initialize the size with 0 and root with null.
 
-search:
-construiesc functia recursiv si parcurg arborele in functie de comparatia intre element si nodul cu care parcurg(la stanga sau la dreapta), pana gasesc nodul cu elementul cautat.
+IsEmpty:
 
-minimum:
-Acesta este elementul cel mai din stanga al subarborelui stang(cel mai jos)
+Check if my tree doesn't have root (this is the first one)
 
-maximum:
-Acesta este elementul cel mai mare din subarborele drept(parcurg pana la NULL in dreapta)
+Search:
 
-succesor si predecesor:
-Aceste functii sunt foarte asemanatoare. Exista 2 situatii in fiecare din acestea:
-Ptu predecesor: daca exista subarborele drept de la nod, atunci e minimul din acel subarbore, altfel parcurg cu parintele pana gasesc valoarea mai mica ca nodul
-Ptu succesor: daca exista subarborele stang al nodului, returnez valoarea maxima, altfel la fel parcurg cu parintele pana gasesc o valoare mai mare decat nodul
+I construct the recursive function and traverse the tree according to the comparison between the element and the node with which I traverse (left or right), until I find the node with the searched element.
+
+Minimum:
+This is the leftmost element of the left subtree (bottom)
+
+Maximum:
+This is the largest element in the right subtree (scroll to NULL on the right)
+
+Successor & Predecessor:
+
+These functions are very similar. There are 2 situations in each of these:
+
+For the predecessor: if there is a subtree right from the node, then it is the minimum of that subtree, otherwise I go with the parent until I find the value lower than the node
+
+Successor : if there is a left subtree of the node, I return the maximum value, otherwise I go with the parent until I find a value higher than the node
 
 updateHeight:
-calculez inaltimea pentru arborele stang si cel drept si apoi actualizez inaltimea in functie de care e cea mai mare plus nodul radacina
 
-avlrotateleft:
+I calculate the height for the left and right tree and then I update the height according to which is the largest plus the root node
+
+Avlrotateleft:
+
 Schimb linkurile dintre nodurile x si y si copilul din stanga al lui y.
 Linkuesc si legaturile dintre parintii acestora. Iau si cazul in care nu exista copii, sau nu x nu are parinte.Ma intreb daca x e copil de stanga sau copil de dreapta, ca sa ii leg parintele de y.
 La final actualizez inaltimea pentru x si y.
