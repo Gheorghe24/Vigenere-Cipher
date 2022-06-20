@@ -30,9 +30,9 @@ Successor & Predecessor:
 
 These functions are very similar. There are 2 situations in each of these:
 
-For the predecessor: if there is a subtree right from the node, then it is the minimum of that subtree, otherwise I go with the parent until I find the value lower than the node
+- Predecessor: if there is a subtree right from the node, then it is the minimum of that subtree, otherwise I go with the parent until I find the value lower than the node
 
-Successor : if there is a left subtree of the node, I return the maximum value, otherwise I go with the parent until I find a value higher than the node
+- Successor : if there is a left subtree of the node, I return the maximum value, otherwise I go with the parent until I find a value higher than the node
 
 UpdateHeight:
 ------------
