@@ -69,19 +69,23 @@ A function very similar to the one above but here I check the balance right from
 
 CreateTreeNode:
 ----------------
-functie deja creata
+As the name of the function, I allocate a node for a tree.
 
 Insert:
 --------------
-Aici am inceput prin a crea nodul cu elementul si informatia specifica
-Parcurg arborele pana gasesc pozitia unde ar trebui sa il inserez si totodata verific daca acesta nu e duplicat
-In cazul in care lista e goala, doar inserez root si ii pun legatura de end tot lui
-Altfel, ma uit daca inserez in partea dreapta sau partea stanga a frunzei sau daca deja exista un nod cu acelasi element
-Daca nu exista, ii fac legatura cu parintele(frunza) si cu end.
-Daca e duplicat, ii fac legaturile duble intre nodul precedent si nodul urmator(daca exista acestea) si mut legatura end la nodul inserat. 
-Apoi pentru cazurile in care nu e duplicat fac legatura intre next si prev-ul fiecarui nod inserat(daca nu cumva e minim sau maxim, in cazul asta nu as putea fac o legatura din acestea).
-Avand in vedere ca inserez si intr-o lista dublu inlantuita in ordine crescatoare,ma folosesc de succesor si predecesor.
-Maresc size-ul arborelui si verific daca e acesta e balansat corect.
+Here we started by creating the node with the specific element and information
+I scroll through the tree until I find the position where I should insert it and also check if it is not duplicated
+
+If the list is empty, I just insert root and put the end link to it as well
+Otherwise, I look if I insert in the right or left side of the leaf or if there is already a node with the same element
+
+If it doesn't exist, I connect it with the parent (leaf) and the end.
+If it is duplicated, I make the double connections between the previous node and the next node (if any) and move the end link to the inserted node.
+
+Then for the cases in which it is not duplicated, I make the connection between the next and the prev of each inserted node (if it is not a minimum or maximum, in this case I could not make a connection from them).
+
+Since I am also inserting in a double-linked list in ascending order, I use my successor and predecessor.
+I increase the size of the tree and check if it is properly balanced.
 
 Delete:
 ----------
