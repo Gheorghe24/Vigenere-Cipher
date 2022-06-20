@@ -89,21 +89,25 @@ I increase the size of the tree and check if it is properly balanced.
 
 Delete:
 ----------
-Aici folosesc si o functie ajutatoare "Link_node_parent"
-Aceasta face legaturile intre parintele primului nod dat ca parametru si cel de-al doilea nod.
-Verific, desigur, daca exista aceste noduri si daca nu e root primul din acestea.
+I also use a "Link_node_parent" helper function here
+This makes the connections between the parent of the first node given as a parameter and the second node.
+I check, of course, if these nodes exist and if the first of them is not root.
 
-Si incepem delete ...
-Verific prima data daca nu cumva am ramas doar cu un nod fara copii si pur si simplu ii dau delete si ii scad sizeul
+And we start deleting ...
+I check the first time if I'm not left with only one node without children and I simply delete it and decrease its size
 
-Altfel, cu ajutorul lui search, salvez nodul cautat si parintele acestuia(ma va ajuta pe viitor la balansare).
-Iau cazul in care nodul specificat este dublicat si il sterg de la final, fac legatura noua cu end si intre nodurile din fata acestuia si urmatorul(next si prev, daca exista).
-Fac mai jos legaturile intre prev si next pentru orice nod dat ca parametru cu ajutorul succesorul si predecesorului(daca exista).
-Altfel, daca nodul cautat are sau nu copii, avem 3 cazuri(un copil(de dreapta sau stanga), 2 copii si niciun copil(nod frunza)).
-Ma folosesc de functia ajutatoare pentru a inlocui astfel legaturile intre parintele nodului pe care trebuie sa il sterg cu acel copil gasit(daca exista).
-Daca exista ambii, il inlocuiesc cu succesorul sau si aici trebuie sa schimb legaturile si intre copiii succesorului.
-Daca nu are copii, doar ii pun Null legaturii parintelui acestui nod cautat
-La final sterg elementul cu functia destroy, creata deja care elibereaza si memoria totodata, miscorez size-ul si balansez arborele, daca acesta are nevoie de asta
+Otherwise, with the help of search, I save the searched node and its parent (it will help me to balance in the future).
+
+I take the case if the specified node is duplicated and I delete it from the end, I make the new connection with end and between the nodes in front of it and the next one (next and prev, if any).
+
+Below are the links between prev and next for any node given as a parameter using the successor and predecessor (if any).
+Otherwise, whether or not the node you are looking for has children, we have 3 cases (one child (right or left), 2 children and no children (leaf node)).
+
+I use the helper function to replace the links between the parent of the node that I need to delete with that child found (if any).
+If there are both, I replace him with his successor and here I have to change the ties between the successor's children.
+If he doesn't have children, I just put Null in the connection of the parent of this wanted node
+
+At the end I delete the element with the destroy function, already created which also releases the memory, I move the size and balance the tree, if it needs it
 
 DestroyTree:
 -------------
