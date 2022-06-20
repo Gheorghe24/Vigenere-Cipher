@@ -138,8 +138,8 @@ At the end I return the created range.
 
 RangeKeyQuery:
 -----------------
-Aloc memorie pentru o noua cheie(range), parcurg iarasi de la nodul minim(inceputul listei),
-Caut nodurile doar din intervalul specificat(elementul nodului trebuie sa fie intre charurile p si q)
-In cazul in care capacitatea e prea mica si am nevoie sa o maresc, ii realoc memorie indexului si maresc capacitatea de 2 ori.
-Pun in index informatia din acest nod si parcurg lista pana la final.
-Returnez cheia.
+Allocate memory for a new key (range), scroll again from the minimum node (beginning of the list).
+Search for nodes only within the specified range (node element must be between chars p and q).
+If the capacity is too small and I need to increase it, I reallocate the memory to the index and increase the capacity twice.
+I index the information in this node and go through the list to the end.
+Return the key.
