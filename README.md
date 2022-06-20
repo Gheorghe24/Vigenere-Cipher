@@ -111,27 +111,30 @@ At the end I delete the element with the destroy function, already created which
 
 DestroyTree:
 -------------
-Incep de la finalul listei si sterg fiecare element pana ajung la inceput, ma folosesc de un pointer auxiliar ca sa dau free nodului curent.
-Apoi eliberez memoria arborelui.
+I start at the end of the list and delete each element until I get to the beginning, I use an auxiliary pointer to free the current node.
+Then I release the memory of the tree.
 
 CERINTA 2: CIPHER
 -----------------------------------------------------------------------------------
-Aduc in acest fisier antetul unor functii din Tema2.c
+I declare in this file the header of some functions from Theme2.c
 
 BuildTreeFromFile:
 ------------------
-Deschid fisierul cu numele dat ca parametru, aloc memorie pentru un char "linie" pe care il citesc din fisier. Ma folosesc de while(fgets) ca sa citesc pana la finalul fisierului, apoi cu strtok iau fiecare cuvant din linia citita. Imi creez un element cu functia createStrElement(aceasta trunhiaza automat cuvintele la primele 5 litere). De asemenea, imi declar o variabila in care salvez lungimea fiecarui cuvintelor citite pana la final, acesta e transmis ca informatie in insert
-Inserez nodul cu elementul si lungimea specifica, actualizez lungimea, distrug elementul si fac iarasi strtok ca sa iau urmatorul nod
-Inchid fisierul si eliberez memorie pentru "linia citita"(pointerul la char alocat).
+I open the file with the name given as a parameter, I allocate memory for a "line" char that I read from the file. 
+I use while loop (fgets) to read to the end of the file, then with "strtok" I take every word from the line read. 
+I create an element with the createStrElement function (it automatically truncates the words to the first 5 letters). I also declare a variable in which I save the length of each word read to the end, it is transmitted as information in the insert
+
+I insert the node with the specific element and length, update the length, destroy the element and use "strtok" again to take the next node
+I close the file and release the memory for the "read line" (the assigned char pointer).
 
 CERINTA 3:
 -----------------------------------------------------------------------------------
 inorderKeyQuery:
 ------------------
-aloc memorie pentru un nou range
-Ii pun sizeul initial 0 si capacitatea size-ul arborelui(puteam pune si alte valori insa aceasta cred ca este cea mai eficienta, pentru a nu realoca in alte cazuri).
-Parcurg lista de la nodul minim si pun in index informatia din fiecare nod,cresc sizeul
-La final returnez rangeul creat.
+Allocate memory for a new range
+I put the initial size 0 and the capacity size of the tree (I could put other values but I think this is the most efficient, not to reallocate in other cases).
+I scroll through the list from the minimum node and index the information in each node, increasing the size
+At the end I return the created range.
 
 RangeKeyQuery:
 -----------------
