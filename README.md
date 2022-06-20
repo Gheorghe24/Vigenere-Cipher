@@ -114,7 +114,7 @@ DestroyTree:
 I start at the end of the list and delete each element until I get to the beginning, I use an auxiliary pointer to free the current node.
 Then I release the memory of the tree.
 
-CERINTA 2: CIPHER
+TASK 2: CIPHER
 -----------------------------------------------------------------------------------
 I declare in this file the header of some functions from Theme2.c
 
