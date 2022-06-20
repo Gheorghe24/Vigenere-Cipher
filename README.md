@@ -34,7 +34,7 @@ For the predecessor: if there is a subtree right from the node, then it is the m
 
 Successor : if there is a left subtree of the node, I return the maximum value, otherwise I go with the parent until I find a value higher than the node
 
-updateHeight:
+UpdateHeight:
 ------------
 
 I calculate the height for the left and right tree and then I update the height according to which is the largest plus the root node
@@ -127,9 +127,9 @@ I create an element with the createStrElement function (it automatically truncat
 I insert the node with the specific element and length, update the length, destroy the element and use "strtok" again to take the next node
 I close the file and release the memory for the "read line" (the assigned char pointer).
 
-CERINTA 3:
+TASK 3:
 -----------------------------------------------------------------------------------
-inorderKeyQuery:
+InorderKeyQuery:
 ------------------
 Allocate memory for a new range
 I put the initial size 0 and the capacity size of the tree (I could put other values but I think this is the most efficient, not to reallocate in other cases).
