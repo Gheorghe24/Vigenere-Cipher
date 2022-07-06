@@ -39,7 +39,7 @@ UpdateHeight:
 
 I calculate the height for the left and right tree and then I update the height according to which is the largest plus the root node
 
-AvlRotateLeft:
+AVLRotateLeft:
 --------------
 
 I change the links between the nodes x and y and the child to the left of y.
@@ -47,23 +47,23 @@ I also link the connection between their parents. Then I take the case that ther
 I wonder if x is a left child or a right child, to link his parent to y.
 At the end I update the height for x and y.
 
-AvlRotateRight:
+AVLRotateRight:
 ----------------
 It's exactly the same algorithm but here x is the child on the left for y and we change the connection with the child on the right of x.
 
-AvlGetBalance:
+AVLGetBalance:
 ---------------
 I check if that node exists and if it has a right or left child then I return the formula:
 
 (height (left) - height (right))
 
-AvlFixup:
+AVLFixup:
 ----------
 I check the balance starting from the parent of the node
 Check if the parent is unbalanced on the right or left side
 or if it is in a zig-zag shape and makes the necessary rotations
 
-AvlDeleteFixup:
+AVLDeleteFixup:
 ----------------
 A function very similar to the one above but here I check the balance right from that node and I use the balance of the node (unbalanced subtree, right or left child)
 
